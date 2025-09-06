@@ -1718,66 +1718,6 @@
             } }
                 }
             });
-
-            // PO Status Chart
-            const poStatusCtx = document.getElementById('poStatusChart').getContext('2d');
-            new Chart(poStatusCtx, {
-                type: 'bar',
-                data: {
-                    labels: ['Created', 'Approved', 'Received', 'Invoiced', 'Paid'],
-                    datasets: [{
-                        label: 'Purchase Orders',
-                        data: [567, 534, 489, 456, 423],
-                        backgroundColor: '#8884d8'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } }
-                }
-            });
-
-            // 3-Way Matching Chart
-            const matchingCtx = document.getElementById('matchingChart').getContext('2d');
-            new Chart(matchingCtx, {
-                type: 'pie',
-                data: {
-                    labels: ['Exact Match', 'Partial Match', 'No Match', 'Manual Review'],
-                    datasets: [{
-                        data: [456, 67, 23, 21],
-                        backgroundColor: ['#82ca9d', '#ffc658', '#ff7300', '#8dd1e1']
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { position: 'bottom' } }
-                }
-            });
-
-            // Compliance Chart
-            const complianceCtx = document.getElementById('complianceChart').getContext('2d');
-            new Chart(complianceCtx, {
-                type: 'bar',
-                data: {
-                    labels: ['GST', 'TDS', 'MSME', 'Audit', 'Policy', 'Documents'],
-                    datasets: [{
-                        label: 'Current (%)',
-                        data: [98, 96, 100, 99, 94, 97],
-                        backgroundColor: '#8884d8'
-                    }, {
-                        label: 'Target (%)',
-                        data: [95, 95, 100, 95, 90, 95],
-                        backgroundColor: '#82ca9d'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { position: 'bottom' } },
-                    scales: { y: { min: 80, max: 100
-
         }
 
         // Initialize all charts when page loads
