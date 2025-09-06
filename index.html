@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invoice Dashboard</title>
+    <title>FiniFi Dashboard</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -27,12 +27,38 @@
         }
 
         .header-content {
-            max-width: 1280px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 1rem 1rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            min-width: 200px;
+        }
+
+        .logo-placeholder {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
         }
 
         .header-title h1 {
@@ -81,10 +107,53 @@
             background-color: #1d4ed8;
         }
 
+        .tabs-container {
+            background-color: white;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .tabs {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            overflow-x: auto;
+            padding: 0 1rem;
+        }
+
+        .tab {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            color: #6b7280;
+            font-weight: 500;
+            white-space: nowrap;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tab.active {
+            color: #2563eb;
+            border-bottom-color: #2563eb;
+        }
+
+        .tab:hover:not(.active) {
+            color: #374151;
+        }
+
         .container {
-            max-width: 1280px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 2rem 1rem;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
         }
 
         .grid {
@@ -102,6 +171,10 @@
 
         .grid-cols-3 {
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .grid-cols-5 {
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         }
 
         .card {
@@ -151,35 +224,15 @@
             font-size: 1.25rem;
         }
 
-        .stat-trend {
-            display: flex;
-            align-items: center;
-            margin-top: 1rem;
-            font-size: 0.875rem;
-        }
-
-        .trend-positive {
-            color: #059669;
-        }
-
-        .trend-negative {
-            color: #dc2626;
-        }
-
-        .blue { color: #2563eb; }
-        .blue-bg { background-color: #dbeafe; }
-        .red { color: #dc2626; }
-        .red-bg { background-color: #fee2e2; }
-        .yellow { color: #d97706; }
-        .yellow-bg { background-color: #fef3c7; }
-        .green { color: #059669; }
-        .green-bg { background-color: #d1fae5; }
-        .orange { color: #ea580c; }
-        .orange-bg { background-color: #fed7aa; }
-
         .chart-container {
             position: relative;
             height: 300px;
+            margin-top: 1rem;
+        }
+
+        .chart-container-large {
+            position: relative;
+            height: 400px;
             margin-top: 1rem;
         }
 
@@ -188,67 +241,6 @@
             font-weight: 600;
             color: #111827;
             margin-bottom: 1rem;
-        }
-
-        .overdue-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .overdue-card {
-            text-align: center;
-            padding: 1.5rem;
-            border-radius: 0.5rem;
-        }
-
-        .overdue-card h4 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .overdue-card p {
-            font-size: 0.875rem;
-            color: #6b7280;
-            margin-bottom: 0.5rem;
-        }
-
-        .overdue-card .amount {
-            font-size: 1.125rem;
-            font-weight: 600;
-        }
-
-        .r2a-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 1rem;
-        }
-
-        .r2a-card {
-            text-align: center;
-            padding: 1rem;
-            border: 1px solid #e5e7eb;
-            border-radius: 0.5rem;
-        }
-
-        .r2a-card h4 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: #111827;
-            margin-bottom: 0.25rem;
-        }
-
-        .r2a-card p {
-            font-size: 0.875rem;
-            color: #6b7280;
-            margin-bottom: 0.25rem;
-        }
-
-        .r2a-card .amount {
-            font-size: 0.875rem;
-            font-weight: 500;
-            color: #2563eb;
         }
 
         .info-list {
@@ -276,15 +268,115 @@
             font-weight: 600;
         }
 
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+        }
+
+        .status-card {
+            text-align: center;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+        }
+
+        .status-card h4 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .status-card p {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 0.5rem;
+        }
+
+        .status-card .amount {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        /* Color classes */
+        .blue { color: #2563eb; }
+        .blue-bg { background-color: #dbeafe; }
+        .red { color: #dc2626; }
+        .red-bg { background-color: #fee2e2; }
+        .yellow { color: #d97706; }
+        .yellow-bg { background-color: #fef3c7; }
+        .green { color: #059669; }
+        .green-bg { background-color: #d1fae5; }
+        .orange { color: #ea580c; }
+        .orange-bg { background-color: #fed7aa; }
+        .purple { color: #7c3aed; }
+        .purple-bg { background-color: #ede9fe; }
+        .indigo { color: #4f46e5; }
+        .indigo-bg { background-color: #e0e7ff; }
+
         .mb-8 { margin-bottom: 2rem; }
         .mb-4 { margin-bottom: 1rem; }
         .mt-8 { margin-top: 2rem; }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+
+        .data-table th,
+        .data-table td {
+            text-align: left;
+            padding: 0.75rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .data-table th {
+            background-color: #f9fafb;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .badge-pending {
+            background-color: #fef3c7;
+            color: #d97706;
+        }
+
+        .badge-approved {
+            background-color: #d1fae5;
+            color: #059669;
+        }
+
+        .badge-paid {
+            background-color: #dbeafe;
+            color: #2563eb;
+        }
+
+        .badge-rejected {
+            background-color: #fee2e2;
+            color: #dc2626;
+        }
 
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
                 gap: 1rem;
                 text-align: center;
+            }
+
+            .header-left {
+                flex-direction: column;
+                gap: 1rem;
             }
 
             .header-controls {
@@ -296,16 +388,16 @@
                 padding: 1rem;
             }
 
-            .grid-cols-4 {
+            .grid-cols-4, .grid-cols-3, .grid-cols-2, .grid-cols-5 {
                 grid-template-columns: 1fr;
             }
 
-            .grid-cols-2 {
-                grid-template-columns: 1fr;
+            .tabs {
+                padding: 0 0.5rem;
             }
 
-            .grid-cols-3 {
-                grid-template-columns: 1fr;
+            .tab {
+                padding: 1rem 0.75rem;
             }
         }
     </style>
@@ -314,8 +406,16 @@
     <!-- Header -->
     <div class="header">
         <div class="header-content">
-            <div class="header-title">
-                <h1>Invoice Dashboard</h1>
+            <div class="header-left">
+                <div class="logo-section">
+                    <div class="logo-placeholder">
+                        <i class="fas fa-receipt"></i>
+                    </div>
+                    <div class="header-title">
+                        <h1>FiniFi Dashboard</h1>
+                        <p>Accounts Payable Platform</p>
+                    </div>
+                </div>
             </div>
             <div class="header-controls">
                 <select class="select-input" id="periodSelect">
@@ -332,254 +432,982 @@
         </div>
     </div>
 
+    <!-- Tabs -->
+    <div class="tabs-container">
+        <div class="tabs">
+            <div class="tab active" data-tab="invoices">
+                <i class="fas fa-file-invoice"></i>
+                Invoices
+            </div>
+            <div class="tab" data-tab="vendors">
+                <i class="fas fa-building"></i>
+                Vendors
+            </div>
+            <div class="tab" data-tab="payments">
+                <i class="fas fa-credit-card"></i>
+                Payments
+            </div>
+            <div class="tab" data-tab="reconciliation">
+                <i class="fas fa-balance-scale"></i>
+                Reconciliation
+            </div>
+            <div class="tab" data-tab="purchase-orders">
+                <i class="fas fa-shopping-cart"></i>
+                Purchase Orders
+            </div>
+            <div class="tab" data-tab="compliance">
+                <i class="fas fa-shield-alt"></i>
+                Compliance
+            </div>
+            <div class="tab" data-tab="analytics">
+                <i class="fas fa-chart-bar"></i>
+                Analytics
+            </div>
+        </div>
+    </div>
+
     <div class="container">
-        <!-- Key Metrics -->
-        <div class="grid grid-cols-4 mb-8">
-            <div class="card stat-card">
-                <div class="stat-content">
-                    <h3>Total Invoices</h3>
-                    <div class="stat-value blue">1,234</div>
-                    <div class="stat-subvalue">₹2,45,67,890</div>
+        <!-- Invoices Tab -->
+        <div id="invoices" class="tab-content active">
+            <!-- Invoice Metrics -->
+            <div class="grid grid-cols-4 mb-8">
+                <div class="card stat-card">
+                    <div class="stat-content">
+                        <h3>Total Invoices</h3>
+                        <div class="stat-value blue">1,234</div>
+                        <div class="stat-subvalue">₹2,45,67,890</div>
+                    </div>
+                    <div class="stat-icon blue-bg">
+                        <i class="fas fa-file-alt blue"></i>
+                    </div>
                 </div>
-                <div class="stat-icon blue-bg">
-                    <i class="fas fa-file-alt blue"></i>
+
+                <div class="card stat-card">
+                    <div class="stat-content">
+                        <h3>Overdue Invoices</h3>
+                        <div class="stat-value red">67</div>
+                        <div class="stat-subvalue">₹2,45,000</div>
+                    </div>
+                    <div class="stat-icon red-bg">
+                        <i class="fas fa-exclamation-triangle red"></i>
+                    </div>
+                </div>
+
+                <div class="card stat-card">
+                    <div class="stat-content">
+                        <h3>Provisional Invoices</h3>
+                        <div class="stat-value yellow">89</div>
+                        <div class="stat-subvalue">₹1,23,45,670</div>
+                    </div>
+                    <div class="stat-icon yellow-bg">
+                        <i class="fas fa-clock yellow"></i>
+                    </div>
+                </div>
+
+                <div class="card stat-card">
+                    <div class="stat-content">
+                        <h3>Average TAT</h3>
+                        <div class="stat-value green">4.2 days</div>
+                        <div class="stat-subvalue">Target: 3 days</div>
+                    </div>
+                    <div class="stat-icon green-bg">
+                        <i class="fas fa-chart-line green"></i>
+                    </div>
                 </div>
             </div>
 
-            <div class="card stat-card">
-                <div class="stat-content">
-                    <h3>Overdue Invoices</h3>
-                    <div class="stat-value red">67</div>
-                    <div class="stat-subvalue">₹245K</div>
+            <!-- Charts Row -->
+            <div class="grid grid-cols-2 mb-8">
+                <div class="card">
+                    <h3 class="section-title">Invoice Status Distribution</h3>
+                    <div class="chart-container">
+                        <canvas id="statusChart"></canvas>
+                    </div>
                 </div>
-                <div class="stat-icon red-bg">
-                    <i class="fas fa-exclamation-triangle red"></i>
+
+                <div class="card">
+                    <h3 class="section-title">Invoice Processing Timeline</h3>
+                    <div class="chart-container">
+                        <canvas id="tatChart"></canvas>
+                    </div>
                 </div>
             </div>
 
-            <div class="card stat-card">
-                <div class="stat-content">
-                    <h3>Provisional Invoices</h3>
-                    <div class="stat-value yellow">89</div>
-                    <div class="stat-subvalue">₹1,23,45,670</div>
+            <!-- Invoice Categories -->
+            <div class="grid grid-cols-3 mb-8">
+                <div class="card">
+                    <h3 class="section-title">PO vs Non-PO Invoices</h3>
+                    <div class="status-grid">
+                        <div class="status-card blue-bg">
+                            <h4 class="blue">567</h4>
+                            <p>PO Invoices</p>
+                            <div class="amount blue">₹1,45,67,890</div>
+                        </div>
+                        <div class="status-card green-bg">
+                            <h4 class="green">667</h4>
+                            <p>Non-PO Invoices</p>
+                            <div class="amount green">₹1,00,00,000</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="stat-icon yellow-bg">
-                    <i class="fas fa-clock yellow"></i>
+
+                <div class="card">
+                    <h3 class="section-title">AI Processing Stats</h3>
+                    <ul class="info-list">
+                        <li>
+                            <span class="label">Auto-Processed</span>
+                            <span class="value green">95.2%</span>
+                        </li>
+                        <li>
+                            <span class="label">Manual Review</span>
+                            <span class="value orange">4.8%</span>
+                        </li>
+                        <li>
+                            <span class="label">Accuracy Rate</span>
+                            <span class="value green">99.1%</span>
+                        </li>
+                        <li>
+                            <span class="label">Processing Time</span>
+                            <span class="value blue">2.3 mins</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3 class="section-title">Invoice Sources</h3>
+                    <ul class="info-list">
+                        <li>
+                            <span class="label">Email Integration</span>
+                            <span class="value">789</span>
+                        </li>
+                        <li>
+                            <span class="label">ERP Integration</span>
+                            <span class="value">345</span>
+                        </li>
+                        <li>
+                            <span class="label">Manual Upload</span>
+                            <span class="value">100</span>
+                        </li>
+                        <li>
+                            <span class="label">Vendor Portal</span>
+                            <span class="value">56</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vendors Tab -->
+        <div id="vendors" class="tab-content">
+            <!-- Vendor Metrics -->
+            <div class="grid grid-cols-5 mb-8">
+                <div class="card stat-card">
+                    <div class="stat-content">
+                        <h3>Total Vendors</h3>
+                        <div class="stat-value blue">1,245</div>
+                    </div>
+                    <div class="stat-icon blue-bg">
+                        <i class="fas fa-building blue"></i>
+                    </div>
+                </div>
+
+                <div class="card stat-card">
+                    <div class="stat-content">
+                        <h3>Active Vendors</h3>
+                        <div class="stat-value green">1,089</div>
+                    </div>
+                    <div class="stat-icon green-bg">
+                        <i class="fas fa-check-circle green"></i>
+                    </div>
+                </div>
+
+                <div class="card stat-card">
+                    <div class="stat-content">
+                        <h3>MSME Vendors</h3>
+                        <div class="stat-value purple">456</div>
+                    </div>
+                    <div class="stat-icon purple-bg">
+                        <i class="fas fa-certificate purple"></i>
+                    </div>
+                </div>
+
+                <div class="card stat-card">
+                    <div class="stat-content">
+                        <h3>Pending Approval</h3>
+                        <div class="stat-value orange">34</div>
+                    </div>
+                    <div class="stat-icon orange-bg">
+                        <i class="fas fa-hourglass-half orange"></i>
+                    </div>
+                </div>
+
+                <div class="card stat-card">
+                    <div class="stat-content">
+                        <h3>Onboarding</h3>
+                        <div class="stat-value yellow">89</div>
+                    </div>
+                    <div class="stat-icon yellow-bg">
+                        <i class="fas fa-user-plus yellow"></i>
+                    </div>
                 </div>
             </div>
 
-            <div class="card stat-card">
-                <div class="stat-content">
-                    <h3>Average TAT</h3>
-                    <div class="stat-value green">4.2 days</div>
-                    <div class="stat-subvalue">Target: 3 days</div>
+            <!-- Vendor Analysis -->
+            <div class="grid grid-cols-2 mb-8">
+                <div class="card">
+                    <h3 class="section-title">Vendor Onboarding Pipeline</h3>
+                    <div class="chart-container">
+                        <canvas id="vendorPipelineChart"></canvas>
+                    </div>
                 </div>
-                <div class="stat-icon green-bg">
-                    <i class="fas fa-chart-line green"></i>
+
+                <div class="card">
+                    <h3 class="section-title">Top Vendors by Volume</h3>
+                    <div class="chart-container">
+                        <canvas id="topVendorsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Vendor Details -->
+            <div class="grid grid-cols-3 mb-8">
+                <div class="card">
+                    <h3 class="section-title">Vendor Verification Status</h3>
+                    <ul class="info-list">
+                        <li>
+                            <span class="label">GST Verified</span>
+                            <span class="value green">1,156</span>
+                        </li>
+                        <li>
+                            <span class="label">PAN Verified</span>
+                            <span class="value green">1,134</span>
+                        </li>
+                        <li>
+                            <span class="label">Bank Verified</span>
+                            <span class="value green">1,089</span>
+                        </li>
+                        <li>
+                            <span class="label">Pending Verification</span>
+                            <span class="value orange">111</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3 class="section-title">Vendor Communications</h3>
+                    <ul class="info-list">
+                        <li>
+                            <span class="label">Invitations Sent</span>
+                            <span class="value">234</span>
+                        </li>
+                        <li>
+                            <span class="label">Invitations Accepted</span>
+                            <span class="value blue">189</span>
+                        </li>
+                        <li>
+                            <span class="label">Documents Pending</span>
+                            <span class="value orange">45</span>
+                        </li>
+                        <li>
+                            <span class="label">Completed Onboarding</span>
+                            <span class="value green">156</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3 class="section-title">Risk Assessment</h3>
+                    <div class="status-grid">
+                        <div class="status-card green-bg">
+                            <h4 class="green">1,089</h4>
+                            <p>Low Risk</p>
+                        </div>
+                        <div class="status-card yellow-bg">
+                            <h4 class="yellow">134</h4>
+                            <p>Medium Risk</p>
+                        </div>
+                        <div class="status-card red-bg">
+                            <h4 class="red">22</h4>
+                            <p>High Risk</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Charts Row -->
-        <div class="grid grid-cols-2 mb-8">
-            <div class="card">
-                <h3 class="section-title">Invoice Status Distribution</h3>
-                <div class="chart-container">
-                    <canvas id="statusChart"></canvas>
+        <!-- Payments Tab -->
+        <div id="payments" class="tab-content">
+            <!-- Payment Metrics -->
+            <div class="grid grid-cols-4 mb-8">
+                <div class="card stat-card">
+                    <div class="stat-content">
+                        <h3>Total Payments</h3>
+                        <div class="stat-value blue">₹5.67 Cr</div>
+                        <div class="stat-subvalue">789 transactions</div>
+                    </div>
+                    <div class="stat-icon blue-bg">
+                        <i class="fas fa-credit-card blue"></i>
+                    </div>
+                </div>
+
+                <div class="card stat-card">
+                    <div class="stat-content">
+                        <h3>MSME Payments</h3>
+                        <div class="stat-value purple">₹1.23 Cr</div>
+                        <div class="stat-subvalue">234 transactions</div>
+                    </div>
+                    <div class="stat-icon purple-bg">
+                        <i class="fas fa-handshake purple"></i>
+                    </div>
+                </div>
+
+                <div class="card stat-card">
+                    <div class="stat-content">
+                        <h3>Pending Payments</h3>
+                        <div class="stat-value orange">₹89 L</div>
+                        <div class="stat-subvalue">156 invoices</div>
+                    </div>
+                    <div class="stat-icon orange-bg">
+                        <i class="fas fa-clock orange"></i>
+                    </div>
+                </div>
+
+                <div class="card stat-card">
+                    <div class="stat-content">
+                        <h3>Average Payment Time</h3>
+                        <div class="stat-value green">12.5 days</div>
+                        <div class="stat-subvalue">Target: 15 days</div>
+                    </div>
+                    <div class="stat-icon green-bg">
+                        <i class="fas fa-stopwatch green"></i>
+                    </div>
                 </div>
             </div>
 
-            <div class="card">
-                <h3 class="section-title">Invoices Due Dates</h3>
-                <div class="chart-container">
-                    <canvas id="tatChart"></canvas>
+            <!-- Payment Analysis -->
+            <div class="grid grid-cols-2 mb-8">
+                <div class="card">
+                    <h3 class="section-title">Payment Methods Distribution</h3>
+                    <div class="chart-container">
+                        <canvas id="paymentMethodsChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 class="section-title">Payment Timeline Trends</h3>
+                    <div class="chart-container">
+                        <canvas id="paymentTrendsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Details -->
+            <div class="grid grid-cols-3 mb-8">
+                <div class="card">
+                    <h3 class="section-title">Due Payments Summary</h3>
+                    <ul class="info-list">
+                        <li>
+                            <span class="label">Due Today</span>
+                            <span class="value red">₹12.3 L</span>
+                        </li>
+                        <li>
+                            <span class="label">Due This Week</span>
+                            <span class="value orange">₹34.5 L</span>
+                        </li>
+                        <li>
+                            <span class="label">Due This Month</span>
+                            <span class="value yellow">₹67.8 L</span>
+                        </li>
+                        <li>
+                            <span class="label">Future Payments</span>
+                            <span class="value blue">₹1.23 Cr</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3 class="section-title">Advance Management</h3>
+                    <ul class="info-list">
+                        <li>
+                            <span class="label">Total Advances</span>
+                            <span class="value">₹1,23,000</span>
+                        </li>
+                        <li>
+                            <span class="label">Unique Vendors</span>
+                            <span class="value">45</span>
+                        </li>
+                        <li>
+                            <span class="label">Adjusted</span>
+                            <span class="value green">₹89,000</span>
+                        </li>
+                        <li>
+                            <span class="label">Pending</span>
+                            <span class="value orange">₹34,000</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3 class="section-title">Payment Compliance</h3>
+                    <div class="status-grid">
+                        <div class="status-card green-bg">
+                            <h4 class="green">98.5%</h4>
+                            <p>On-time Payments</p>
+                        </div>
+                        <div class="status-card blue-bg">
+                            <h4 class="blue">100%</h4>
+                            <p>MSME Compliance</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Overdue Analysis -->
-        <div class="card mb-8">
-            <h3 class="section-title">Overdue Analysis</h3>
-            <div class="overdue-grid">
-                <div class="overdue-card red-bg">
-                    <h4 class="red">67</h4>
-                    <p>Total Overdue</p>
-                    <div class="amount red">₹245K</div>
+        <!-- Reconciliation Tab -->
+        <div id="reconciliation" class="tab-content">
+            <!-- GST Reconciliation -->
+            <div class="grid grid-cols-4 mb-8">
+                <div class="card stat-card">
+                    <div class="stat-content">
+                        <h3>Missing in FiniFi</h3>
+                        <div class="stat-value yellow">12</div>
+                        <div class="stat-subvalue">₹45 K</div>
+                    </div>
+                    <div class="stat-icon yellow-bg">
+                        <i class="fas fa-question-circle yellow"></i>
+                    </div>
                 </div>
-                <div class="overdue-card orange-bg">
-                    <h4 class="orange">23</h4>
-                    <p>MSME Overdue</p>
-                    <div class="amount orange">₹89K</div>
+
+                <div class="card stat-card">
+                    <div class="stat-content">
+                        <h3>Missing in GST</h3>
+                        <div class="stat-value orange">8</div>
+                        <div class="stat-subvalue">₹23 K</div>
+                    </div>
+                    <div class="stat-icon orange-bg">
+                        <i class="fas fa-exclamation-circle orange"></i>
+                    </div>
                 </div>
-                <div class="overdue-card yellow-bg">
-                    <h4 class="yellow">15</h4>
-                    <p>R2A Not Filled</p>
-                    <div class="amount yellow">₹34K</div>
+
+                <div class="card stat-card">
+                    <div class="stat-content">
+                        <h3>R2A Matched</h3>
+                        <div class="stat-value green">189</div>
+                        <div class="stat-subvalue">₹5.67 L</div>
+                    </div>
+                    <div class="stat-icon green-bg">
+                        <i class="fas fa-check-double green"></i>
+                    </div>
+                </div>
+
+                <div class="card stat-card">
+                    <div class="stat-content">
+                        <h3>Unmatched</h3>
+                        <div class="stat-value red">34</div>
+                        <div class="stat-subvalue">₹1.23 L</div>
+                    </div>
+                    <div class="stat-icon red-bg">
+                        <i class="fas fa-times-circle red"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reconciliation Charts -->
+            <div class="grid grid-cols-2 mb-8">
+                <div class="card">
+                    <h3 class="section-title">GST Reconciliation Status</h3>
+                    <div class="chart-container">
+                        <canvas id="gstReconChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 class="section-title">Monthly Reconciliation Trends</h3>
+                    <div class="chart-container">
+                        <canvas id="reconTrendsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reconciliation Details -->
+            <div class="grid grid-cols-3 mb-8">
+                <div class="card">
+                    <h3 class="section-title">E-Invoice Status</h3>
+                    <ul class="info-list">
+                        <li>
+                            <span class="label">Generated</span>
+                            <span class="value green">1,089</span>
+                        </li>
+                        <li>
+                            <span class="label">Verified</span>
+                            <span class="value blue">1,034</span>
+                        </li>
+                        <li>
+                            <span class="label">Pending</span>
+                            <span class="value orange">55</span>
+                        </li>
+                        <li>
+                            <span class="label">Failed</span>
+                            <span class="value red">12</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3 class="section-title">ITC Claims</h3>
+                    <ul class="info-list">
+                        <li>
+                            <span class="label">Available ITC</span>
+                            <span class="value green">₹45.67 L</span>
+                        </li>
+                        <li>
+                            <span class="label">Claimed ITC</span>
+                            <span class="value blue">₹43.21 L</span>
+                        </li>
+                        <li>
+                            <span class="label">Disputed ITC</span>
+                            <span class="value orange">₹2.46 L</span>
+                        </li>
+                        <li>
+                            <span class="label">Recovery Rate</span>
+                            <span class="value green">94.6%</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3 class="section-title">Tax Compliance</h3>
+                    <div class="status-grid">
+                        <div class="status-card green-bg">
+                            <h4 class="green">100%</h4>
+                            <p>TDS Compliance</p>
+                        </div>
+                        <div class="status-card blue-bg">
+                            <h4 class="blue">98.9%</h4>
+                            <p>GST Filing</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- R2A Matching Status -->
-        <div class="card mb-8">
-            <h3 class="section-title">R2A Matching Status</h3>
-            <div class="r2a-grid">
-                <div class="r2a-card">
-                    <h4>189</h4>
-                    <p>Matched</p>
-                    <div class="amount">₹567K</div>
+        <!-- Purchase Orders Tab -->
+        <div id="purchase-orders" class="tab-content">
+            <!-- PO Metrics -->
+            <div class="grid grid-cols-4 mb-8">
+                <div class="card stat-card">
+                    <div class="stat-content">
+                        <h3>Total POs</h3>
+                        <div class="stat-value blue">567</div>
+                        <div class="stat-subvalue">₹3.45 Cr</div>
+                    </div>
+                    <div class="stat-icon blue-bg">
+                        <i class="fas fa-shopping-cart blue"></i>
+                    </div>
                 </div>
-                <div class="r2a-card">
-                    <h4>34</h4>
-                    <p>Unmatched</p>
-                    <div class="amount">₹123K</div>
+
+                <div class="card stat-card">
+                    <div class="stat-content">
+                        <h3>3-Way Matched</h3>
+                        <div class="stat-value green">456</div>
+                        <div class="stat-subvalue">80.4% match rate</div>
+                    </div>
+                    <div class="stat-icon green-bg">
+                        <i class="fas fa-check-circle green"></i>
+                    </div>
                 </div>
-                <div class="r2a-card">
-                    <h4>12</h4>
-                    <p>Missing in Finifi</p>
-                    <div class="amount">₹45K</div>
+
+                <div class="card stat-card">
+                    <div class="stat-content">
+                        <h3>Pending GRN</h3>
+                        <div class="stat-value orange">78</div>
+                        <div class="stat-subvalue">₹67.8 L</div>
+                    </div>
+                    <div class="stat-icon orange-bg">
+                        <i class="fas fa-truck orange"></i>
+                    </div>
                 </div>
-                <div class="r2a-card">
-                    <h4>8</h4>
-                    <p>Missing in GST</p>
-                    <div class="amount">₹23K</div>
+
+                <div class="card stat-card">
+                    <div class="stat-content">
+                        <h3>PO Utilization</h3>
+                        <div class="stat-value purple">87.3%</div>
+                        <div class="stat-subvalue">Average utilization</div>
+                    </div>
+                    <div class="stat-icon purple-bg">
+                        <i class="fas fa-chart-pie purple"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PO Analysis -->
+            <div class="grid grid-cols-2 mb-8">
+                <div class="card">
+                    <h3 class="section-title">PO Status Distribution</h3>
+                    <div class="chart-container">
+                        <canvas id="poStatusChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 class="section-title">3-Way Matching Performance</h3>
+                    <div class="chart-container">
+                        <canvas id="matchingChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PO Details -->
+            <div class="grid grid-cols-3 mb-8">
+                <div class="card">
+                    <h3 class="section-title">GRN Processing</h3>
+                    <ul class="info-list">
+                        <li>
+                            <span class="label">Total GRNs</span>
+                            <span class="value">678</span>
+                        </li>
+                        <li>
+                            <span class="label">Quantity Match</span>
+                            <span class="value green">634</span>
+                        </li>
+                        <li>
+                            <span class="label">Amount Match</span>
+                            <span class="value green">612</span>
+                        </li>
+                        <li>
+                            <span class="label">Exceptions</span>
+                            <span class="value orange">44</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3 class="section-title">Department Wise POs</h3>
+                    <ul class="info-list">
+                        <li>
+                            <span class="label">Operations</span>
+                            <span class="value">₹1.23 Cr</span>
+                        </li>
+                        <li>
+                            <span class="label">IT</span>
+                            <span class="value">₹89 L</span>
+                        </li>
+                        <li>
+                            <span class="label">Marketing</span>
+                            <span class="value">₹67 L</span>
+                        </li>
+                        <li>
+                            <span class="label">Others</span>
+                            <span class="value">₹66 L</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3 class="section-title">PO Processing Time</h3>
+                    <div class="status-grid">
+                        <div class="status-card green-bg">
+                            <h4 class="green">2.1</h4>
+                            <p>Avg Days to Approve</p>
+                        </div>
+                        <div class="status-card blue-bg">
+                            <h4 class="blue">1.8</h4>
+                            <p>Avg Days to GRN</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Department & Category Analysis -->
-        <div class="grid grid-cols-2 mb-8">
-            <div class="card">
-                <h3 class="section-title">Department-wise Spends</h3>
-                <div class="chart-container">
-                    <canvas id="departmentChart"></canvas>
+        <!-- Compliance Tab -->
+        <div id="compliance" class="tab-content">
+            <!-- Compliance Metrics -->
+            <div class="grid grid-cols-4 mb-8">
+                <div class="card stat-card">
+                    <div class="stat-content">
+                        <h3>Audit Readiness</h3>
+                        <div class="stat-value green">98.7%</div>
+                        <div class="stat-subvalue">Documentation complete</div>
+                    </div>
+                    <div class="stat-icon green-bg">
+                        <i class="fas fa-shield-check green"></i>
+                    </div>
+                </div>
+
+                <div class="card stat-card">
+                    <div class="stat-content">
+                        <h3>Policy Compliance</h3>
+                        <div class="stat-value blue">94.2%</div>
+                        <div class="stat-subvalue">Within policy limits</div>
+                    </div>
+                    <div class="stat-icon blue-bg">
+                        <i class="fas fa-gavel blue"></i>
+                    </div>
+                </div>
+
+                <div class="card stat-card">
+                    <div class="stat-content">
+                        <h3>Risk Score</h3>
+                        <div class="stat-value yellow">Low</div>
+                        <div class="stat-subvalue">2.3/10 risk rating</div>
+                    </div>
+                    <div class="stat-icon yellow-bg">
+                        <i class="fas fa-exclamation-triangle yellow"></i>
+                    </div>
+                </div>
+
+                <div class="card stat-card">
+                    <div class="stat-content">
+                        <h3>Fraud Detection</h3>
+                        <div class="stat-value purple">0.1%</div>
+                        <div class="stat-subvalue">Suspicious transactions</div>
+                    </div>
+                    <div class="stat-icon purple-bg">
+                        <i class="fas fa-search purple"></i>
+                    </div>
                 </div>
             </div>
 
-            <div class="card">
-                <h3 class="section-title">Category-wise Spends</h3>
-                <div class="chart-container">
-                    <canvas id="categoryChart"></canvas>
+            <!-- Compliance Analysis -->
+            <div class="grid grid-cols-2 mb-8">
+                <div class="card">
+                    <h3 class="section-title">Regulatory Compliance Status</h3>
+                    <div class="chart-container">
+                        <canvas id="complianceChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 class="section-title">Risk Assessment Trends</h3>
+                    <div class="chart-container">
+                        <canvas id="riskTrendsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Compliance Details -->
+            <div class="grid grid-cols-3 mb-8">
+                <div class="card">
+                    <h3 class="section-title">Statutory Compliance</h3>
+                    <ul class="info-list">
+                        <li>
+                            <span class="label">GST Filing</span>
+                            <span class="value green">✓ On Time</span>
+                        </li>
+                        <li>
+                            <span class="label">TDS Returns</span>
+                            <span class="value green">✓ Filed</span>
+                        </li>
+                        <li>
+                            <span class="label">MSME Compliance</span>
+                            <span class="value green">100%</span>
+                        </li>
+                        <li>
+                            <span class="label">Audit Trail</span>
+                            <span class="value blue">Complete</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3 class="section-title">Document Compliance</h3>
+                    <ul class="info-list">
+                        <li>
+                            <span class="label">Invoice Completeness</span>
+                            <span class="value green">98.9%</span>
+                        </li>
+                        <li>
+                            <span class="label">PO Documentation</span>
+                            <span class="value green">97.4%</span>
+                        </li>
+                        <li>
+                            <span class="label">Approval Records</span>
+                            <span class="value green">99.1%</span>
+                        </li>
+                        <li>
+                            <span class="label">Missing Documents</span>
+                            <span class="value orange">23</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3 class="section-title">Control Effectiveness</h3>
+                    <div class="status-grid">
+                        <div class="status-card green-bg">
+                            <h4 class="green">0</h4>
+                            <p>Duplicate Payments</p>
+                        </div>
+                        <div class="status-card blue-bg">
+                            <h4 class="blue">100%</h4>
+                            <p>Approval Coverage</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Usage Report -->
-        <div class="card mb-8">
-            <h3 class="section-title">Daily Usage Report</h3>
-            <div class="chart-container">
-                <canvas id="usageChart"></canvas>
-            </div>
-        </div>
+        <!-- Analytics Tab -->
+        <div id="analytics" class="tab-content">
+            <!-- Analytics Overview -->
+            <div class="grid grid-cols-4 mb-8">
+                <div class="card stat-card">
+                    <div class="stat-content">
+                        <h3>Cost Savings</h3>
+                        <div class="stat-value green">₹45 L</div>
+                        <div class="stat-subvalue">This year</div>
+                    </div>
+                    <div class="stat-icon green-bg">
+                        <i class="fas fa-piggy-bank green"></i>
+                    </div>
+                </div>
 
-        <!-- Vendor & Payment Summary -->
-        <div class="grid grid-cols-2 mb-8">
-            <div class="card">
-                <h3 class="section-title">Vendor Summary</h3>
-                <ul class="info-list">
-                    <li>
-                        <span class="label">Total Vendors</span>
-                        <span class="value">1,245</span>
-                    </li>
-                    <li>
-                        <span class="label">Pending Approval</span>
-                        <span class="value orange">34</span>
-                    </li>
-                    <li>
-                        <span class="label">MSME Vendors</span>
-                        <span class="value green">456</span>
-                    </li>
-                    <li>
-                        <span class="label">Invitations Sent</span>
-                        <span class="value">89</span>
-                    </li>
-                    <li>
-                        <span class="label">Invitations Submitted</span>
-                        <span class="value blue">67</span>
-                    </li>
-                </ul>
-            </div>
+                <div class="card stat-card">
+                    <div class="stat-content">
+                        <h3>Process Efficiency</h3>
+                        <div class="stat-value blue">85%</div>
+                        <div class="stat-subvalue">Time reduction</div>
+                    </div>
+                    <div class="stat-icon blue-bg">
+                        <i class="fas fa-rocket blue"></i>
+                    </div>
+                </div>
 
-            <div class="card">
-                <h3 class="section-title">Payment Summary</h3>
-                <ul class="info-list">
-                    <li>
-                        <span class="label">MSME Due Payments</span>
-                        <span class="value red">₹123K</span>
-                    </li>
-                    <li>
-                        <span class="label">R2A Due Payments</span>
-                        <span class="value orange">₹89K</span>
-                    </li>
-                    <li>
-                        <span class="label">Total Payout Amount</span>
-                        <span class="value green">₹567K</span>
-                    </li>
-                    <li>
-                        <span class="label">Total Invoices</span>
-                        <span class="value">234</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
+                <div class="card stat-card">
+                    <div class="stat-content">
+                        <h3>Automation Rate</h3>
+                        <div class="stat-value purple">92.3%</div>
+                        <div class="stat-subvalue">Straight-through processing</div>
+                    </div>
+                    <div class="stat-icon purple-bg">
+                        <i class="fas fa-robot purple"></i>
+                    </div>
+                </div>
 
-        <!-- Additional Metrics -->
-        <div class="grid grid-cols-3 mt-8">
-            <div class="card">
-                <h4 class="section-title">Advance Summary</h4>
-                <ul class="info-list">
-                    <li>
-                        <span class="label">Total Advance</span>
-                        <span class="value">₹1,23,000</span>
-                    </li>
-                    <li>
-                        <span class="label">Unique Vendors</span>
-                        <span class="value">45</span>
-                    </li>
-                    <li>
-                        <span class="label">Advance Adjusted</span>
-                        <span class="value">₹89,000</span>
-                    </li>
-                    <li>
-                        <span class="label">Pending Adjustments</span>
-                        <span class="value orange">₹34,000</span>
-                    </li>
-                </ul>
+                <div class="card stat-card">
+                    <div class="stat-content">
+                        <h3>User Adoption</h3>
+                        <div class="stat-value orange">96.7%</div>
+                        <div class="stat-subvalue">Active users</div>
+                    </div>
+                    <div class="stat-icon orange-bg">
+                        <i class="fas fa-users orange"></i>
+                    </div>
+                </div>
             </div>
 
-            <div class="card">
-                <h4 class="section-title">Accrual & Provision</h4>
-                <ul class="info-list">
-                    <li>
-                        <span class="label">Accrual (Approved, Not Paid)</span>
-                        <span class="value">₹2,34,000</span>
-                    </li>
-                    <li>
-                        <span class="label">Provision (Due This Month)</span>
-                        <span class="value">₹1,56,000</span>
-                    </li>
-                </ul>
+            <!-- Analytics Charts -->
+            <div class="grid grid-cols-2 mb-8">
+                <div class="card">
+                    <h3 class="section-title">Monthly Spend Analysis</h3>
+                    <div class="chart-container-large">
+                        <canvas id="spendAnalysisChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3 class="section-title">Department Spend Distribution</h3>
+                    <div class="chart-container-large">
+                        <canvas id="departmentSpendChart"></canvas>
+                    </div>
+                </div>
             </div>
 
-            <div class="card">
-                <h4 class="section-title">Location-wise Spends</h4>
-                <ul class="info-list">
-                    <li>
-                        <span class="label">Mumbai</span>
-                        <span class="value">₹3,45,000</span>
-                    </li>
-                    <li>
-                        <span class="label">Delhi</span>
-                        <span class="value">₹2,34,000</span>
-                    </li>
-                    <li>
-                        <span class="label">Bangalore</span>
-                        <span class="value">₹1,89,000</span>
-                    </li>
-                    <li>
-                        <span class="label">Chennai</span>
-                        <span class="value">₹1,23,000</span>
-                    </li>
-                </ul>
+            <!-- Location & Category Analysis -->
+            <div class="grid grid-cols-2 mb-8">
+                <div class="card">
+                    <h3 class="section-title">Location-wise Spends</h3>
+                    <ul class="info-list">
+                        <li>
+                            <span class="label">Mumbai</span>
+                            <span class="value">₹3,45,000</span>
+                        </li>
+                        <li>
+                            <span class="label">Delhi</span>
+                            <span class="value">₹2,34,000</span>
+                        </li>
+                        <li>
+                            <span class="label">Bangalore</span>
+                            <span class="value">₹1,89,000</span>
+                        </li>
+                        <li>
+                            <span class="label">Chennai</span>
+                            <span class="value">₹1,23,000</span>
+                        </li>
+                        <li>
+                            <span class="label">Others</span>
+                            <span class="value">₹89,000</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3 class="section-title">Daily Usage Metrics</h3>
+                    <div class="chart-container">
+                        <canvas id="usageChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ROI & Performance -->
+            <div class="grid grid-cols-3 mb-8">
+                <div class="card">
+                    <h3 class="section-title">ROI Metrics</h3>
+                    <ul class="info-list">
+                        <li>
+                            <span class="label">Implementation Cost</span>
+                            <span class="value">₹25 L</span>
+                        </li>
+                        <li>
+                            <span class="label">Annual Savings</span>
+                            <span class="value green">₹45 L</span>
+                        </li>
+                        <li>
+                            <span class="label">ROI</span>
+                            <span class="value green">180%</span>
+                        </li>
+                        <li>
+                            <span class="label">Payback Period</span>
+                            <span class="value blue">6.7 months</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3 class="section-title">Performance Metrics</h3>
+                    <ul class="info-list">
+                        <li>
+                            <span class="label">Invoice Processing Time</span>
+                            <span class="value green">2.3 mins</span>
+                        </li>
+                        <li>
+                            <span class="label">Error Rate</span>
+                            <span class="value green">0.9%</span>
+                        </li>
+                        <li>
+                            <span class="label">STP Rate</span>
+                            <span class="value blue">92.3%</span>
+                        </li>
+                        <li>
+                            <span class="label">User Satisfaction</span>
+                            <span class="value purple">4.7/5</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3 class="section-title">Productivity Gains</h3>
+                    <div class="status-grid">
+                        <div class="status-card green-bg">
+                            <h4 class="green">85%</h4>
+                            <p>Time Saved</p>
+                        </div>
+                        <div class="status-card blue-bg">
+                            <h4 class="blue">10x</h4>
+                            <p>Faster Processing</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -589,160 +1417,410 @@
         Chart.defaults.font.family = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
         Chart.defaults.color = '#6b7280';
 
-        // Status Chart
-        const statusCtx = document.getElementById('statusChart').getContext('2d');
-        new Chart(statusCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Pending Approval', 'Approved', 'Paid', 'Rejected'],
-                datasets: [{
-                    label: 'PO Invoices',
-                    data: [45, 78, 234, 12],
-                    backgroundColor: '#8884d8'
-                }, {
-                    label: 'Non-PO Invoices',
-                    data: [23, 34, 156, 8],
-                    backgroundColor: '#82ca9d'
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom'
-                    }
+        // Tab switching functionality
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs and content
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                this.classList.add('active');
+                const tabId = this.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // Initialize charts
+        function initializeCharts() {
+            // Invoice Status Chart
+            const statusCtx = document.getElementById('statusChart').getContext('2d');
+            new Chart(statusCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Pending Approval', 'Approved', 'Paid', 'Rejected'],
+                    datasets: [{
+                        label: 'PO Invoices',
+                        data: [45, 78, 234, 12],
+                        backgroundColor: '#8884d8'
+                    }, {
+                        label: 'Non-PO Invoices',
+                        data: [23, 34, 156, 8],
+                        backgroundColor: '#82ca9d'
+                    }]
                 },
-                scales: {
-                    x: {
-                        stacked: true
-                    },
-                    y: {
-                        stacked: true
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom' } },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
                     }
                 }
-            }
-        });
+            });
 
-        // TAT Chart
-        const tatCtx = document.getElementById('tatChart').getContext('2d');
-        new Chart(tatCtx, {
-            type: 'doughnut',
-            data: {
-                labels: ['0-2 days', '3-5 days', '6-10 days', '11+ days'],
-                datasets: [{
-                    data: [35, 30, 22, 13],
-                    backgroundColor: ['#8884d8', '#82ca9d', '#ffc658', '#ff7300']
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom'
-                    }
-                }
-            }
-        });
-
-        // Department Chart
-        const deptCtx = document.getElementById('departmentChart').getContext('2d');
-        new Chart(deptCtx, {
-            type: 'bar',
-            data: {
-                labels: ['IT', 'Marketing', 'Operations', 'HR', 'Finance'],
-                datasets: [{
-                    label: 'Amount (₹K)',
-                    data: [145, 89, 234, 67, 45],
-                    backgroundColor: '#8884d8'
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                indexAxis: 'y',
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                }
-            }
-        });
-
-        // Category Chart
-        const catCtx = document.getElementById('categoryChart').getContext('2d');
-        new Chart(catCtx, {
-            type: 'pie',
-            data: {
-                labels: ['Software', 'Marketing', 'Office Supplies', 'Travel', 'Utilities'],
-                datasets: [{
-                    data: [234, 156, 89, 67, 45],
-                    backgroundColor: ['#8884d8', '#82ca9d', '#ffc658', '#ff7300', '#8dd1e1']
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom'
-                    }
-                }
-            }
-        });
-
-        // Usage Chart
-        const usageCtx = document.getElementById('usageChart').getContext('2d');
-        new Chart(usageCtx, {
-            type: 'line',
-            data: {
-                labels: ['Jun 1', 'Jun 2', 'Jun 3', 'Jun 4', 'Jun 5', 'Jun 6', 'Jun 7'],
-                datasets: [{
-                    label: 'Invoices Processed',
-                    data: [23, 34, 28, 45, 38, 52, 41],
-                    borderColor: '#8884d8',
-                    backgroundColor: 'rgba(136, 132, 216, 0.1)',
-                    fill: true
-                }, {
-                    label: 'Users Logged',
-                    data: [12, 15, 18, 14, 16, 19, 17],
-                    borderColor: '#82ca9d',
-                    backgroundColor: 'rgba(130, 202, 157, 0.1)',
-                    fill: true
-                }, {
-                    label: 'Vendors Added',
-                    data: [3, 2, 5, 1, 4, 2, 6],
-                    borderColor: '#ffc658',
-                    backgroundColor: 'rgba(255, 198, 88, 0.1)',
-                    fill: true
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom'
-                    }
+            // TAT Chart
+            const tatCtx = document.getElementById('tatChart').getContext('2d');
+            new Chart(tatCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['0-2 days', '3-5 days', '6-10 days', '11+ days'],
+                    datasets: [{
+                        data: [35, 30, 22, 13],
+                        backgroundColor: ['#8884d8', '#82ca9d', '#ffc658', '#ff7300']
+                    }]
                 },
-                interaction: {
-                    intersect: false,
-                    mode: 'index'
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom' } }
                 }
-            }
+            });
+
+            // Vendor Pipeline Chart
+            const vendorPipelineCtx = document.getElementById('vendorPipelineChart').getContext('2d');
+            new Chart(vendorPipelineCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Invited', 'Documents Submitted', 'Verification', 'Approved', 'Active'],
+                    datasets: [{
+                        label: 'Vendors',
+                        data: [234, 189, 167, 156, 134],
+                        backgroundColor: ['#8884d8', '#82ca9d', '#ffc658', '#ff7300', '#8dd1e1']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Top Vendors Chart
+            const topVendorsCtx = document.getElementById('topVendorsChart').getContext('2d');
+            new Chart(topVendorsCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Vendor A', 'Vendor B', 'Vendor C', 'Vendor D', 'Vendor E'],
+                    datasets: [{
+                        label: 'Amount (₹L)',
+                        data: [245, 189, 156, 134, 123],
+                        backgroundColor: '#8884d8'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    plugins: { legend: { display: false } }
+                }
+            });
+
+            // Payment Methods Chart
+            const paymentMethodsCtx = document.getElementById('paymentMethodsChart').getContext('2d');
+            new Chart(paymentMethodsCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['RTGS', 'NEFT', 'IMPS', 'Cheque', 'UPI'],
+                    datasets: [{
+                        data: [45, 30, 15, 8, 2],
+                        backgroundColor: ['#8884d8', '#82ca9d', '#ffc658', '#ff7300', '#8dd1e1']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom' } }
+                }
+            });
+
+            // Payment Trends Chart
+            const paymentTrendsCtx = document.getElementById('paymentTrendsChart').getContext('2d');
+            new Chart(paymentTrendsCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'Payment Amount (₹Cr)',
+                        data: [4.5, 5.2, 4.8, 6.1, 5.7, 5.9],
+                        borderColor: '#8884d8',
+                        backgroundColor: 'rgba(136, 132, 216, 0.1)',
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom' } }
+                }
+            });
+
+            // GST Recon Chart
+            const gstReconCtx = document.getElementById('gstReconChart').getContext('2d');
+            new Chart(gstReconCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Matched', 'Unmatched', 'Missing in FiniFi', 'Missing in GST'],
+                    datasets: [{
+                        data: [189, 34, 12, 8],
+                        backgroundColor: ['#82ca9d', '#ff7300', '#ffc658', '#8dd1e1']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom' } }
+                }
+            });
+
+            // Recon Trends Chart
+            const reconTrendsCtx = document.getElementById('reconTrendsChart').getContext('2d');
+            new Chart(reconTrendsCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'Match Rate (%)',
+                        data: [85, 87, 89, 91, 88, 92],
+                        borderColor: '#82ca9d',
+                        backgroundColor: 'rgba(130, 202, 157, 0.1)',
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom' } },
+                    scales: { y: { min: 80, max: 100 } }
+                }
+            });
+
+            // Risk Trends Chart
+            const riskTrendsCtx = document.getElementById('riskTrendsChart').getContext('2d');
+            new Chart(riskTrendsCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'Risk Score',
+                        data: [3.2, 2.8, 2.5, 2.1, 2.0, 2.3],
+                        borderColor: '#ff7300',
+                        backgroundColor: 'rgba(255, 115, 0, 0.1)',
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom' } },
+                    scales: { y: { min: 0, max: 5 } }
+                }
+            });
+
+            // Spend Analysis Chart
+            const spendAnalysisCtx = document.getElementById('spendAnalysisChart').getContext('2d');
+            new Chart(spendAnalysisCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    datasets: [{
+                        label: 'Total Spend (₹Cr)',
+                        data: [4.5, 5.2, 4.8, 6.1, 5.7, 5.9, 6.3, 5.8, 6.0, 6.2, 5.9, 6.1],
+                        borderColor: '#8884d8',
+                        backgroundColor: 'rgba(136, 132, 216, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }, {
+                        label: 'PO Spend (₹Cr)',
+                        data: [2.7, 3.1, 2.9, 3.7, 3.4, 3.5, 3.8, 3.5, 3.6, 3.7, 3.5, 3.7],
+                        borderColor: '#82ca9d',
+                        backgroundColor: 'rgba(130, 202, 157, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }, {
+                        label: 'Non-PO Spend (₹Cr)',
+                        data: [1.8, 2.1, 1.9, 2.4, 2.3, 2.4, 2.5, 2.3, 2.4, 2.5, 2.4, 2.4],
+                        borderColor: '#ffc658',
+                        backgroundColor: 'rgba(255, 198, 88, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom' } },
+                    interaction: { intersect: false, mode: 'index' }
+                }
+            });
+
+            // Department Spend Chart
+            const departmentSpendCtx = document.getElementById('departmentSpendChart').getContext('2d');
+            new Chart(departmentSpendCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Operations', 'IT', 'Marketing', 'HR', 'Finance', 'Admin', 'R&D'],
+                    datasets: [{
+                        label: 'Current Month (₹L)',
+                        data: [234, 145, 89, 67, 45, 34, 78],
+                        backgroundColor: '#8884d8'
+                    }, {
+                        label: 'Previous Month (₹L)',
+                        data: [210, 123, 98, 56, 43, 29, 65],
+                        backgroundColor: '#82ca9d'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom' } },
+                    scales: { x: { stacked: false }, y: { stacked: false } }
+                }
+            });
+
+            // Usage Chart
+            const usageCtx = document.getElementById('usageChart').getContext('2d');
+            new Chart(usageCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Jun 1', 'Jun 2', 'Jun 3', 'Jun 4', 'Jun 5', 'Jun 6', 'Jun 7'],
+                    datasets: [{
+                        label: 'Invoices Processed',
+                        data: [23, 34, 28, 45, 38, 52, 41],
+                        borderColor: '#8884d8',
+                        backgroundColor: 'rgba(136, 132, 216, 0.1)',
+                        fill: true
+                    }, {
+                        label: 'Users Logged',
+                        data: [12, 15, 18, 14, 16, 19, 17],
+                        borderColor: '#82ca9d',
+                        backgroundColor: 'rgba(130, 202, 157, 0.1)',
+                        fill: true
+                    }, {
+                        label: 'Vendors Added',
+                        data: [3, 2, 5, 1, 4, 2, 6],
+                        borderColor: '#ffc658',
+                        backgroundColor: 'rgba(255, 198, 88, 0.1)',
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom' } },
+                    interaction: { intersect: false, mode: 'index' }
+                }
+            });
+        }
+
+        // Initialize all charts when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeCharts();
         });
 
         // Export functionality
         document.querySelector('.btn-primary').addEventListener('click', function() {
-            alert('Export functionality would be implemented here');
+            const activeTab = document.querySelector('.tab.active').getAttribute('data-tab');
+            alert(`Exporting ${activeTab.replace('-', ' ').toUpperCase()} data...`);
         });
 
         // Period selector
         document.getElementById('periodSelect').addEventListener('change', function() {
             console.log('Period changed to:', this.value);
-            // Implement period change logic here
+            // Implement period change logic here - would typically refresh charts with new data
+        });
+
+        // Add some interactive functionality
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Add keyboard navigation for tabs
+        document.addEventListener('keydown', function(e) {
+            const tabs = document.querySelectorAll('.tab');
+            const activeTab = document.querySelector('.tab.active');
+            const currentIndex = Array.from(tabs).indexOf(activeTab);
+            
+            if (e.key === 'ArrowLeft' && currentIndex > 0) {
+                tabs[currentIndex - 1].click();
+            } else if (e.key === 'ArrowRight' && currentIndex < tabs.length - 1) {
+                tabs[currentIndex + 1].click();
+            }
         });
     </script>
 </body>
-</html>
+</html> } }
+                }
+            });
+
+            // PO Status Chart
+            const poStatusCtx = document.getElementById('poStatusChart').getContext('2d');
+            new Chart(poStatusCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Created', 'Approved', 'Received', 'Invoiced', 'Paid'],
+                    datasets: [{
+                        label: 'Purchase Orders',
+                        data: [567, 534, 489, 456, 423],
+                        backgroundColor: '#8884d8'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } }
+                }
+            });
+
+            // 3-Way Matching Chart
+            const matchingCtx = document.getElementById('matchingChart').getContext('2d');
+            new Chart(matchingCtx, {
+                type: 'pie',
+                data: {
+                    labels: ['Exact Match', 'Partial Match', 'No Match', 'Manual Review'],
+                    datasets: [{
+                        data: [456, 67, 23, 21],
+                        backgroundColor: ['#82ca9d', '#ffc658', '#ff7300', '#8dd1e1']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom' } }
+                }
+            });
+
+            // Compliance Chart
+            const complianceCtx = document.getElementById('complianceChart').getContext('2d');
+            new Chart(complianceCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['GST', 'TDS', 'MSME', 'Audit', 'Policy', 'Documents'],
+                    datasets: [{
+                        label: 'Current (%)',
+                        data: [98, 96, 100, 99, 94, 97],
+                        backgroundColor: '#8884d8'
+                    }, {
+                        label: 'Target (%)',
+                        data: [95, 95, 100, 95, 90, 95],
+                        backgroundColor: '#82ca9d'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom' } },
+                    scales: { y: { min: 80, max: 100
