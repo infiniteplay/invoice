@@ -1715,51 +1715,7 @@
                     interaction: { intersect: false, mode: 'index' }
                 }
             });
-        }
-
-        // Initialize all charts when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            initializeCharts();
-        });
-
-        // Export functionality
-        document.querySelector('.btn-primary').addEventListener('click', function() {
-            const activeTab = document.querySelector('.tab.active').getAttribute('data-tab');
-            alert(`Exporting ${activeTab.replace('-', ' ').toUpperCase()} data...`);
-        });
-
-        // Period selector
-        document.getElementById('periodSelect').addEventListener('change', function() {
-            console.log('Period changed to:', this.value);
-            // Implement period change logic here - would typically refresh charts with new data
-        });
-
-        // Add some interactive functionality
-        document.querySelectorAll('.card').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-2px)';
-            });
-            
-            card.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0)';
-            });
-        });
-
-        // Add keyboard navigation for tabs
-        document.addEventListener('keydown', function(e) {
-            const tabs = document.querySelectorAll('.tab');
-            const activeTab = document.querySelector('.tab.active');
-            const currentIndex = Array.from(tabs).indexOf(activeTab);
-            
-            if (e.key === 'ArrowLeft' && currentIndex > 0) {
-                tabs[currentIndex - 1].click();
-            } else if (e.key === 'ArrowRight' && currentIndex < tabs.length - 1) {
-                tabs[currentIndex + 1].click();
-            }
-        });
-    </script>
-</body>
-</html> } }
+            } }
                 }
             });
 
@@ -1821,3 +1777,49 @@
                     maintainAspectRatio: false,
                     plugins: { legend: { position: 'bottom' } },
                     scales: { y: { min: 80, max: 100
+
+        }
+
+        // Initialize all charts when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeCharts();
+        });
+
+        // Export functionality
+        document.querySelector('.btn-primary').addEventListener('click', function() {
+            const activeTab = document.querySelector('.tab.active').getAttribute('data-tab');
+            alert(`Exporting ${activeTab.replace('-', ' ').toUpperCase()} data...`);
+        });
+
+        // Period selector
+        document.getElementById('periodSelect').addEventListener('change', function() {
+            console.log('Period changed to:', this.value);
+            // Implement period change logic here - would typically refresh charts with new data
+        });
+
+        // Add some interactive functionality
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Add keyboard navigation for tabs
+        document.addEventListener('keydown', function(e) {
+            const tabs = document.querySelectorAll('.tab');
+            const activeTab = document.querySelector('.tab.active');
+            const currentIndex = Array.from(tabs).indexOf(activeTab);
+            
+            if (e.key === 'ArrowLeft' && currentIndex > 0) {
+                tabs[currentIndex - 1].click();
+            } else if (e.key === 'ArrowRight' && currentIndex < tabs.length - 1) {
+                tabs[currentIndex + 1].click();
+            }
+        });
+    </script>
+</body>
+</html> 
